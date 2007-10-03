@@ -9,11 +9,13 @@
 
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author cewei.foo.2006
  */
-public class LineItem {
+public class LineItem implements Serializable{
     
     private int lineItemID;
     private Item lineItem;
