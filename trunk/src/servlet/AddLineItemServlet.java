@@ -8,9 +8,13 @@ package servlet;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
+import model.Item;
+import model.ItemDataManager;
+import model.LineItem;
 
 /**
  *
@@ -37,7 +41,27 @@ public class AddLineItemServlet extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
          */
+        ArrayList <LineItem> cart = null;
         
+        out.println("U are at AddLineItemServlet <br>");
+        
+        int id = Integer.parseInt(request.getParameter("id"));
+        HttpSession session = request.getSession();
+        cart = (ArrayList<LineItem>) session.getAttribute("shoppingCart");
+        if(cart == null){
+            cart = new ArrayList <LineItem>();
+        }
+        
+        LineItem lineItem = new LineItem();
+        lineItem.setLineItem(ItemDataManager.retrieve(id));
+        cart.add(lineItem);
+        
+        session.setAttribute("shoppingCart", cart);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/cart.jsp");
+        dispatcher.forward(request, response);
+        
+        out.println(id);
         out.close();
     }
     
